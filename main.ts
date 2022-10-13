@@ -41,6 +41,6 @@ game.onUpdate(function() {
   }
 
 })
-joe.x = 120 * 16
+joe.x = randint(8,120) * 16
 
 
