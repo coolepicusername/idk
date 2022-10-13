@@ -3,7 +3,7 @@ let jumps = 1
 
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
  if (jumps > 0) {
-     joe.vy = -100 
+     joe.vy = -150
      jumps -= 1
  }
    
@@ -28,7 +28,7 @@ joe = sprites.create(img`
     . . . . f f f f f f f f . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(joe, 100, 0)
+controller.moveSprite(joe, 150, 0)
 scene.cameraFollowSprite(joe)
 controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
 game.splash(joe.y / 16)
@@ -41,4 +41,6 @@ game.onUpdate(function() {
   }
 
 })
+joe.x = 120 * 16
+
 

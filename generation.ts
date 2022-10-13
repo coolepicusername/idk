@@ -66,9 +66,9 @@ for (let index = 0; index < 128; index++) {
     creator.x += 16
     if (y > 15 && y < 40) {
         y += randint(randint(2, -2), randint(2, -2))
-    } else if (y < 15) {
+    } else if (y < 16) {
         y += randint(0, 2)
-    } else if (y > 40) {
+    } else if (y > 39) {
         y += randint(0, -2)
     }
 }
