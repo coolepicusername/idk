@@ -1,8 +1,13 @@
-/**
- * player and movement
- */
+//player and movement
+let jumps = 1
+
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    joe.vy = -100
+ if (jumps > 0) {
+     joe.vy = -100 
+     jumps -= 1
+ }
+   
+
 })
 let joe: Sprite = null
 joe = sprites.create(img`
@@ -25,80 +30,15 @@ joe = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(joe, 100, 0)
 scene.cameraFollowSprite(joe)
-tiles.setCurrentTilemap(tilemap`level1`)
-// generation
-let creator = sprites.create(img`
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 . . . . . . . . . . . . . . 5 
-    5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
-    `, SpriteKind.Player)
-let y = randint(25, 35)
-creator.x = 8
-for (let index = 0; index < 128; index++) {
-    creator.y = y * 16 - 8
-    tiles.setTileAt(creator.tilemapLocation(), img`
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-                e e e e e e e e e e e e e e e e
-            `)
-    tiles.setWallAt(creator.tilemapLocation(), true)
-    for (let index = 0; index < 16; index++) {
-        creator.y += 16
-        tiles.setTileAt(creator.tilemapLocation(), img`
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                        e e e e e e e e e e e e e e e e
-                    `)
-        tiles.setWallAt(creator.tilemapLocation(), true)
-    }
-    creator.x += 16
-    if (y > 15 && y < 40) {
-        y += randint(randint(2, -2), randint(2, -2))
-    } else if (y < 15) {
-        y += randint(0, 2)
-    } else if (y > 40) {
-        y += randint(0, -2)
-    }
-}
-game.onUpdate(function () {
-    joe.vy += 5
+controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
+game.splash(joe.y / 16)
 })
+
+
+game.onUpdate(function() {
+  if (joe.isHittingTile(CollisionDirection.Bottom)) {
+      jumps = 2
+  }
+
+})
+
