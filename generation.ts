@@ -18,10 +18,10 @@ let creator = sprites.create(img`
     5 . . . . . . . . . . . . . . 5 
     5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
     `, SpriteKind.Player)
-let y = randint(25, 35)
+let y = randint(25, 35) * 16
 creator.x = 8
 for (let index = 0; index < 128; index++) {
-    creator.y = y * 16 - 8
+    creator.y = y 
     tiles.setTileAt(creator.tilemapLocation(), img`
                 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
                 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
@@ -64,12 +64,12 @@ for (let index = 0; index < 128; index++) {
         tiles.setWallAt(creator.tilemapLocation(), true)
     }
     creator.x += 16
-    if (y > 15 && y < 40) {
-        y += randint(randint(2, -2), randint(2, -2))
-    } else if (y < 16) {
-        y += randint(0, 2)
-    } else if (y > 39) {
-        y += randint(0, -2)
+    if (y > 255 && y < 640) {
+        y += randint(randint(24, -24), randint(24, -24))
+    } else if (y < 256) {
+        y += randint(0, 24)
+    } else if (y > 639) {
+        y += randint(0, -24)
     }
 }
 game.onUpdate(function () {
