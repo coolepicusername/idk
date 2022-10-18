@@ -188,24 +188,7 @@ scene.setBackgroundImage(img`
 scroller.setCameraScrollingMultipliers(0.2, 0)
 
 //tile destruction
-let select = sprites.create(img`
-        5 5 5 5 . . . . . . . . 5 5 5 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . 5 5 . . . . . . .
-        . . . . . . . 5 5 . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 5 5 5 . . . . . . . . 5 5 5 5
-    `, SpriteKind.Food)
+let select : Sprite = null
 controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
     let select = sprites.create(img`
         5 5 5 5 . . . . . . . . 5 5 5 5
