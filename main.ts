@@ -189,6 +189,7 @@ scroller.setCameraScrollingMultipliers(0.2, 0)
 
 //tile destruction
 let select : Sprite = null
+let destructionMode = 0  
 controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
     let select = sprites.create(img`
         5 5 5 5 . . . . . . . . 5 5 5 5
@@ -209,7 +210,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
         5 5 5 5 . . . . . . . . 5 5 5 5
     `,SpriteKind.Food)
     tiles.placeOnTile(select, joe.tilemapLocation())
+    controller.moveSprite(joe,0,0)
 })
-controller.A.onEvent(ControllerButtonEvent.Released,function() { 
-    select.destroy()
+controller.A.onEvent(ControllerButtonEvent.Released,function() {    
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
 })
