@@ -1,13 +1,14 @@
 //player and movement
 let jumps = 1
+let isSelect = 0
 
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
- if (jumps > 0 && isSelect = 0) {
-     joe.vy = -150
-     jumps -= 1
+ if (jumps > 0) {
+     if (isSelect = 0) {
+           joe.vy = -150
+        jumps -= 1  
+     }
  }
-   
-
 })
 let joe: Sprite = null
 joe = sprites.create(img`
@@ -190,7 +191,7 @@ scroller.setCameraScrollingMultipliers(0.2, 0)
 //tile destruction
 let select : Sprite = null
 let destructionMode = 0 
-let isSelect = 0
+
 controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
     let select = sprites.create(img`
         5 5 5 5 . . . . . . . . 5 5 5 5
