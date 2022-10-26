@@ -1,4 +1,5 @@
 // Add your code here
+let height = 12
 tiles.setCurrentTilemap(tilemap`level1`)
 let creator = sprites.create(img`
     5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
@@ -65,11 +66,11 @@ for (let index = 0; index < 128; index++) {
     }
     creator.x += 16
     if (y > 255 && y < 640) {
-        y += randint(randint(24, -24), randint(24, -24))
+        y += randint(randint(height, -height), randint(height, -height))
     } else if (y < 256) {
-        y += randint(0, 24)
+        y += randint(0, height)
     } else if (y > 639) {
-        y += randint(0, -24)
+        y += randint(0, -height)
     }
 }
 game.onUpdate(function () {

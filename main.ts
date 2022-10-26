@@ -4,7 +4,7 @@ let isSelect = 0
 
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
  if (jumps > 0) {
-     if (isSelect = 0) {
+     if (isSelect = 1) {
            joe.vy = -150
         jumps -= 1  
      }
@@ -29,18 +29,42 @@ joe = sprites.create(img`
     . . . . f f f f f f f f . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-controller.moveSprite(joe, 150, 0)
 scene.cameraFollowSprite(joe)
 controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
-game.splash(joe.y / 16)
+game.splash(isSelect)
 })
 
-
+let accelerate = 4
 game.onUpdate(function() {
   if (joe.isHittingTile(CollisionDirection.Bottom)) {
       jumps = 2
   }
+info.setScore(Math.floor(joe.vx))
+if (controller.left.isPressed()){
+    joe.vx -= accelerate
+}
+ if (controller.right.isPressed()) {
+     joe.vx += accelerate
+        
 
+  }
+  if (joe.isHittingTile(CollisionDirection.Bottom)) {
+      if (joe.vx > 0) {
+          joe.vx -= 2
+      }
+      if (joe.vx < 0) {
+          joe.vx += 2
+      }
+      if (joe.vx > -150) {
+          joe.vx -= 4
+      }
+      if (joe.vx < 150) {
+          joe.vx += 4
+      }
+     accelerate = 4 
+  } else {
+accelerate = 0.5
+  }
 })
 tiles.placeOnRandomTile(joe,img`
     7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
@@ -212,11 +236,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
         5 5 5 5 . . . . . . . . 5 5 5 5
     `,SpriteKind.Food)
     tiles.placeOnTile(select, joe.tilemapLocation())
-    controller.moveSprite(joe,0,0)
     isSelect = 1
 })
 controller.A.onEvent(ControllerButtonEvent.Released,function() {    
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
-    controller.moveSprite(joe,100,0)
     isSelect = 0
 })
