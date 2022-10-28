@@ -5,7 +5,7 @@ let isSelect = 0
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
  if (jumps > 0) {
      if (isSelect = 1) {
-           joe.vy = -150
+           joe.vy = -120 - Math.abs(joe.vx / 6)
         jumps -= 1  
      }
  }
@@ -35,11 +35,12 @@ game.splash(isSelect)
 })
 
 let accelerate = 4
+
 game.onUpdate(function() {
   if (joe.isHittingTile(CollisionDirection.Bottom)) {
       jumps = 2
   }
-info.setScore(Math.floor(joe.vx))
+info.setScore(Math.floor(joe.y) / 16)
 if (controller.left.isPressed()){
     joe.vx -= accelerate
 }
@@ -48,6 +49,7 @@ if (controller.left.isPressed()){
         
 
   }
+
   if (joe.isHittingTile(CollisionDirection.Bottom)) {
       if (joe.vx > 0) {
           joe.vx -= 2
@@ -63,7 +65,7 @@ if (controller.left.isPressed()){
       }
      accelerate = 4 
   } else {
-accelerate = 0.5
+accelerate = 1
   }
 })
 tiles.placeOnRandomTile(joe,img`
