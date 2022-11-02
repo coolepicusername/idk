@@ -1,5 +1,5 @@
 // Add your code here
-let height = 8
+let height = 4
 
 tiles.setCurrentTilemap(tilemap`level1`)
 

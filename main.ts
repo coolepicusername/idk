@@ -1,16 +1,49 @@
-//player and movement
-let jumps = 1
-let isSelect = 0
-
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
- if (jumps > 0) {
-     if (isSelect = 1) {
-           joe.vy = -120 - Math.abs(joe.vx / 6)
-        jumps -= 1  
-     }
- }
+    if (jumps > 0) {
+        if (isSelect = 1) {
+            joe.vy = -120 - Math.abs(joe.vx / 6)
+            jumps += 0 - 1
+        }
+    }
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    game.splash(isSelect)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    select2 = sprites.create(img`
+        5 5 5 5 . . . . . . . . 5 5 5 5 
+        5 . . . . . . . . . . . . . . 5 
+        5 . . . . . . . . . . . . . . 5 
+        5 . . . . . . . . . . . . . . 5 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 5 5 . . . . . . . 
+        . . . . . . . 5 5 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . 5 
+        5 . . . . . . . . . . . . . . 5 
+        5 . . . . . . . . . . . . . . 5 
+        5 . . . . . . . . . . . . . . 5 
+        5 5 5 5 . . . . . . . . 5 5 5 5 
+        `, SpriteKind.Food)
+    tiles.placeOnTile(select2, joe.tilemapLocation())
+    isSelect = 1
+})
+controller.A.onEvent(ControllerButtonEvent.Released, function () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    isSelect = 0
+})
+let select2: Sprite = null
+let jumps = 0
+let destructionMode = 0
+// tile destruction
+let select = null
 let joe: Sprite = null
+let isSelect = 0
+// player and movement
+jumps = 1
 joe = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -30,66 +63,27 @@ joe = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
 scene.cameraFollowSprite(joe)
-controller.B.onEvent(ControllerButtonEvent.Pressed,function() {
-game.splash(isSelect)
-})
-
 let accelerate = 4
-
-game.onUpdate(function() {
-  if (joe.isHittingTile(CollisionDirection.Bottom)) {
-      jumps = 2
-  }
-info.setScore(Math.floor(joe.y) / 16)
-if (controller.left.isPressed()){
-    joe.vx -= accelerate
-}
- if (controller.right.isPressed()) {
-     joe.vx += accelerate
-        
-
-  }
-
-  if (joe.isHittingTile(CollisionDirection.Bottom)) {
-      if (joe.vx > 0) {
-          joe.vx -= 2
-      }
-      if (joe.vx < 0) {
-          joe.vx += 2
-      }
-      if (joe.vx > -150) {
-          joe.vx -= 4
-      }
-      if (joe.vx < 150) {
-          joe.vx += 4
-      }
-     accelerate = 4 
-  } else {
-accelerate = 1
-  }
-})
-tiles.placeOnRandomTile(joe,img`
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-    e e e e e e e e e e e e e e e e
-`)
+tiles.placeOnRandomTile(joe, img`
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+        e e e e e e e e e e e e e e e e
+    `)
 joe.y -= 32
-
-//background
-
+// background
 scene.setBackgroundImage(img`
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
@@ -211,36 +205,37 @@ scene.setBackgroundImage(img`
     6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
     6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
     6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
-`)
+    `)
 scroller.setCameraScrollingMultipliers(0.2, 0)
-
-//tile destruction
-let select : Sprite = null
-let destructionMode = 0 
-
-controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
-    let select = sprites.create(img`
-        5 5 5 5 . . . . . . . . 5 5 5 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . 5 5 . . . . . . .
-        . . . . . . . 5 5 . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 . . . . . . . . . . . . . . 5
-        5 5 5 5 . . . . . . . . 5 5 5 5
-    `,SpriteKind.Food)
-    tiles.placeOnTile(select, joe.tilemapLocation())
-    isSelect = 1
-})
-controller.A.onEvent(ControllerButtonEvent.Released,function() {    
-    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
-    isSelect = 0
+game.onUpdate(function () {
+    if (joe.isHittingTile(CollisionDirection.Bottom)) {
+        jumps = 2
+    }
+    info.setScore(Math.floor(joe.vx))
+    if (controller.left.isPressed()) {
+        joe.vx -= accelerate
+    }
+    if (controller.right.isPressed()) {
+        joe.vx += accelerate
+    }
+    if (Math.abs(joe.vy) < 10 && !(controller.left.isPressed()) && !(controller.right.isPressed())) {
+        joe.vx = 0
+    }
+    if (joe.isHittingTile(CollisionDirection.Bottom)) {
+        if (joe.vx > 0) {
+            joe.vx -= 2
+        }
+        if (joe.vx < 0) {
+            joe.vx += 2
+        }
+        if (joe.vx > -150) {
+            joe.vx -= 4
+        }
+        if (joe.vx < 150) {
+            joe.vx += 4
+        }
+        accelerate = 4
+    } else {
+        accelerate = 2
+    }
 })
